@@ -1,0 +1,21 @@
+name: EmporiumStockReloader
+#Purges the Cache daily of the Fish Emporium and Virtual Tank Fish pages for the Insaniquarium Wiki. Allows the infobox to update automatically.
+
+on:
+  schedule:
+    # every day at midnight UTC
+    - cron: '0 0 * * *'
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge The Fish Emporium
+        run: |
+          curl -s \
+            "https://insaniquarium.fandom.com/api.php?action=purge&titles=The_Fish_Emporium&format=json"
+
+      - name: Purge Virtual Tank Fish
+        run: |
+          curl -s \
+            "https://insaniquarium.fandom.com/api.php?action=purge&titles=Virtual_Tank_Fish&format=json"
