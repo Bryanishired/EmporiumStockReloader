@@ -19,3 +19,8 @@ jobs:
         run: |
           curl -s \
             "https://insaniquarium.fandom.com/api.php?action=purge&titles=Virtual_Tank_Fish&format=json"
+            
+      - name: Purge Template:Infobox/VTShopStock
+        run: |
+          curl -s \
+            "https://insaniquarium.fandom.com/api.php?action=purge&titles=Template:Infobox/VTShopStock&format=json"
