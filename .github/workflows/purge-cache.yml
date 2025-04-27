@@ -11,19 +11,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Purge The Fish Emporium
+        env:
+          BOT_USERNAME: ${{ secrets.WIKI_BOT_USERNAME }}
+          BOT_PASSWORD: ${{ secrets.WIKI_BOT_PASSWORD }}
         run: |
-          curl -X POST \
+          curl -X POST --user "$BOT_USERNAME:$BOT_PASSWORD" \
             -d "action=purge&titles=The_Fish_Emporium&format=json" \
             "https://insaniquarium.fandom.com/api.php"
 
       - name: Purge Virtual Tank Fish
+        env:
+          BOT_USERNAME: ${{ secrets.WIKI_BOT_USERNAME }}
+          BOT_PASSWORD: ${{ secrets.WIKI_BOT_PASSWORD }}
         run: |
-          curl -X POST \
+          curl -X POST --user "$BOT_USERNAME:$BOT_PASSWORD" \
             -d "action=purge&titles=Virtual_Tank_Fish&format=json" \
             "https://insaniquarium.fandom.com/api.php"
             
       - name: Purge Template:Infobox/VTShopStock
+        env:
+          BOT_USERNAME: ${{ secrets.WIKI_BOT_USERNAME }}
+          BOT_PASSWORD: ${{ secrets.WIKI_BOT_PASSWORD }}
         run: |
-          curl -X POST \
+          curl -X POST --user "$BOT_USERNAME:$BOT_PASSWORD" \
             -d "action=purge&titles=Template:Infobox/VTShopStock&format=json" \
             "https://insaniquarium.fandom.com/api.php"
