@@ -3,7 +3,7 @@ name: EmporiumStockReloader
 
 on:
   schedule:
-    # every day at midnight UTC
+    # Updates every day at midnight UTC
     - cron: '0 0 * * *'
 
 jobs:
