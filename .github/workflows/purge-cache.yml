@@ -37,13 +37,16 @@ jobs:
             -d "action=purge&titles=Template:Infobox/VTShopStock&format=json" \
             "https://insaniquarium.fandom.com/api.php"
       - name: Update keepalive timestamp
-        if: github.event.schedule == '0 0 * * 1'
         run: |
-          git config --global user.name "wiki-bot"
-          git config --global user.email "bot@example.com"
-          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} temprepo
-          cd temprepo
-          date > .keepalive
-          git add .keepalive
-          git commit -m "Keepalive update"
-          git push
+          if [ "$(date -u +%u)" = 1 ]; then
+            git config --global user.name "wiki-bot"
+            git config --global user.email "bot@example.com"
+            git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} temprepo
+            cd temprepo
+            date > .keepalive
+            git add .keepalive
+            git commit -m "Keepalive update"
+            git push
+          else
+            echo "Not Monday — skipping keepalive update."
+          fi
