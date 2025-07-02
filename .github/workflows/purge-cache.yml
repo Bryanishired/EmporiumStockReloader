@@ -1,13 +1,12 @@
 name: EmporiumStockReloader
-# Purges the Cache daily of the Fish Emporium and Virtual Tank Fish pages for the Insaniquarium Wiki. Allows the infobox to update automatically.
 
 on:
   schedule:
-    # Updates every day at midnight UTC
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *' # daily at midnight UTC
 
 jobs:
   purge:
+    name: Purge Wiki Cache
     runs-on: ubuntu-latest
     steps:
       - name: Purge The Fish Emporium
@@ -27,7 +26,7 @@ jobs:
           curl -X POST --user "$BOT_USERNAME:$BOT_PASSWORD" \
             -d "action=purge&titles=Virtual_Tank_Fish&format=json" \
             "https://insaniquarium.fandom.com/api.php"
-            
+
       - name: Purge Template:Infobox/VTShopStock
         env:
           BOT_USERNAME: ${{ secrets.WIKI_BOT_USERNAME }}
@@ -36,17 +35,12 @@ jobs:
           curl -X POST --user "$BOT_USERNAME:$BOT_PASSWORD" \
             -d "action=purge&titles=Template:Infobox/VTShopStock&format=json" \
             "https://insaniquarium.fandom.com/api.php"
-      - name: Update keepalive timestamp
-        run: |
-          if [ "$(date -u +%u)" = 1 ]; then
-            git config --global user.name "wiki-bot"
-            git config --global user.email "bot@example.com"
-            git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} temprepo
-            cd temprepo
-            date > .keepalive
-            git add .keepalive
-            git commit -m "Keepalive update"
-            git push
-          else
-            echo "Not Monday — skipping keepalive update."
-          fi
+
+  keepalive-job:
+    name: Keepalive Workflow
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/keepalive-workflow@v2
