@@ -2,7 +2,7 @@ name: EmporiumStockReloader
 
 on:
   schedule:
-    - cron: '0 0 * * *' # daily at midnight UTC
+    - cron: '0 0 * * *' # daily at Midnight UTC
 
 jobs:
   purge:
