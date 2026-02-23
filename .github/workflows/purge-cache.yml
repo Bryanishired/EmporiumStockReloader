@@ -36,6 +36,7 @@ jobs:
             -d "action=purge&titles=Template:Infobox/VTShopStock&format=json" \
             "https://insaniquarium.fandom.com/api.php"
 
+  # doesn't work. Fix at some point.
   keepalive-job:
     name: Keepalive Workflow
     runs-on: ubuntu-latest
